@@ -28,7 +28,6 @@ public class Application {
         frame.add(panel);
         Application app = new Application();
         app.placeComponents(panel);
-        // 设置界面可见
         frame.setVisible(true);
     }
 
@@ -51,17 +50,10 @@ public class Application {
 
     private void placeComponents(JPanel panel) {
 
-        /* 布局部分我们这边不多做介绍
-         * 这边设置布局为 null
-         */
         panel.setLayout(null);
 
-        // 创建 JLabel
+        // create JLabel
         JLabel colListLabel = new JLabel("Cols:");
-        /* 这个方法定义了组件的位置。
-         * setBounds(x, y, width, height)
-         * x 和 y 指定左上角的新位置，由 width 和 height 指定新的大小。
-         */
         colListLabel.setBounds(10, 20, 80, 25);
         panel.add(colListLabel);
 
@@ -133,7 +125,6 @@ public class Application {
         resultText.setBounds(100, 190, 300, 200);
         scrollPane.setViewportView(resultText);
 
-        // 创建登录按钮
         JButton loginButton = new JButton("Execute");
         loginButton.setBounds(100, 400, 80, 25);
         loginButton.addActionListener(new ActionListener() {
