@@ -66,6 +66,7 @@ public class Application {
          */
         colListText = new JTextArea();
         colListText.setBounds(100, 20, 300, 100);
+        colListText.setLineWrap(true);
         panel.add(colListText);
 
         JLabel tableNameLabel = new JLabel("Table Name:");
