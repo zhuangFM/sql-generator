@@ -64,7 +64,7 @@ public class SqlGenerator {
         for (String col : colNameList) {
             if (col.equals(this.primaryKey))
                 continue;
-            String str = col + "=#{";
+            String str = "`" + col + "`" + "=#{";
             int position = col.indexOf("_");
             char[] toChArr = col.toCharArray();
             while (position > 0) {
@@ -75,46 +75,46 @@ public class SqlGenerator {
             result.append(str);
         }
         result.replace(result.length() - 1, result.length(), "");
-        result.append(" WHERE "+this.primaryKey+"=#{");
+        result.append(" WHERE " + "`" + this.primaryKey + "`=#{");
         int position = this.primaryKey.indexOf("_");
         char[] toChArr = this.primaryKey.toCharArray();
         while (position > 0) {
             toChArr[position + 1] = Character.toUpperCase(toChArr[position + 1]);
             position = this.primaryKey.indexOf("_", position + 1);
         }
-        result.append(String.valueOf(toChArr).replaceAll("_", "")+"}");
+        result.append(String.valueOf(toChArr).replaceAll("_", "") + "}");
         return result.toString();
     }
 
-    public String getDeleteSql(){
+    public String getDeleteSql() {
         StringBuilder result = new StringBuilder("");
-        result.append("DELETE * FROM "+this.tableName+" WHERE "+this.primaryKey+"=#{");
+        result.append("DELETE FROM " + this.tableName + " WHERE " + this.primaryKey + "=#{");
         int position = this.primaryKey.indexOf("_");
         char[] toChArr = this.primaryKey.toCharArray();
         while (position > 0) {
             toChArr[position + 1] = Character.toUpperCase(toChArr[position + 1]);
             position = this.primaryKey.indexOf("_", position + 1);
         }
-        result.append(String.valueOf(toChArr).replaceAll("_", "")+"}");
+        result.append(String.valueOf(toChArr).replaceAll("_", "") + "}");
         return result.toString();
     }
 
-    public String getSelectSql(){
+    public String getSelectSql() {
         StringBuilder result = new StringBuilder("");
-        result.append("SELECT * FROM "+this.tableName);
+        result.append("SELECT * FROM " + this.tableName);
         return result.toString();
     }
 
-    public String getSelectByPrimaryKeySql(){
+    public String getSelectByPrimaryKeySql() {
         StringBuilder result = new StringBuilder("");
-        result.append("SELECT * FROM "+this.tableName+" WHERE "+this.primaryKey+"=#{");
+        result.append("SELECT * FROM " + this.tableName + " WHERE " + this.primaryKey + "=#{");
         int position = this.primaryKey.indexOf("_");
         char[] toChArr = this.primaryKey.toCharArray();
         while (position > 0) {
             toChArr[position + 1] = Character.toUpperCase(toChArr[position + 1]);
             position = this.primaryKey.indexOf("_", position + 1);
         }
-        result.append(String.valueOf(toChArr).replaceAll("_", "")+"}");
+        result.append(String.valueOf(toChArr).replaceAll("_", "") + "}");
         return result.toString();
     }
 
