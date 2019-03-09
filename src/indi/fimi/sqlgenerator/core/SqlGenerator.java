@@ -60,21 +60,26 @@ public class SqlGenerator {
 
     public String getUpdateSql() {
         StringBuilder result = new StringBuilder("");
-        result.append("UPDATE " + this.tableName + " SET ");
+        result.append("UPDATE " + this.tableName + "\n");
+        result.append("<trim prefix=\"set\" suffixOverrides=\",\">\n");
         for (String col : colNameList) {
             if (col.equals(this.primaryKey))
                 continue;
-            String str = "`" + col + "`" + "=#{";
             int position = col.indexOf("_");
             char[] toChArr = col.toCharArray();
             while (position > 0) {
                 toChArr[position + 1] = Character.toUpperCase(toChArr[position + 1]);
                 position = col.indexOf("_", position + 1);
             }
+            String ifTestStrPrefix = "<if test=\"null != " + String.valueOf(toChArr).replaceAll("_", "") + "\">";
+            String ifTestStrPostfix = "</if>\n";
+            String str = ifTestStrPrefix + "`" + col + "`" + "=#{";
             str += String.valueOf(toChArr).replaceAll("_", "") + "},";
+            str += ifTestStrPostfix;
             result.append(str);
         }
-        result.replace(result.length() - 1, result.length(), "");
+//        result.replace(result.length() - 1, result.length(), "");
+        result.append("</trim>\n");
         result.append(" WHERE " + "`" + this.primaryKey + "`=#{");
         int position = this.primaryKey.indexOf("_");
         char[] toChArr = this.primaryKey.toCharArray();
